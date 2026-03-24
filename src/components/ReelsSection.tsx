@@ -82,20 +82,7 @@ function ReelCard({ reel, index }: { reel: Reel; index: number }) {
           {reel.category}
         </div>
 
-        {/* Bottom title overlay */}
-        <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0,
-          background: 'linear-gradient(to top, rgba(5,8,16,0.92) 0%, transparent 100%)',
-          padding: '40px 16px 16px',
-          zIndex: 10,
-        }}>
-          <div style={{
-            fontSize: '13px', fontWeight: 700, color: '#FFFFFF',
-            fontFamily: 'Inter, sans-serif', letterSpacing: '0.02em',
-          }}>
-            {reel.title}
-          </div>
-        </div>
+
       </div>
     </motion.div>
   );
