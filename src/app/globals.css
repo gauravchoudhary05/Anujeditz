@@ -1,26 +1,493 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @import "tailwindcss";
 
+/* ── CSS Custom Properties ───────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:         #050810;
+  --bg-card:    rgba(17, 27, 46, 0.7);
+  --bg-input:   rgba(17, 27, 46, 0.8);
+  --bg-section: #0A0F1E;
+  --cyan:       #00F5D4;
+  --purple:     #9B5DE5;
+  --text:       #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border:     rgba(255, 255, 255, 0.06);
+  --border-cyan: rgba(0, 245, 212, 0.2);
+  --glass-blur: blur(16px);
+  --radius-card: 16px;
+  --radius-sm:  8px;
+  --ease:       cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Base Reset ──────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Custom Scrollbar ────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+
+/* ─────────────────────────────────────────────────────────── */
+/* GLOBAL DESIGN SYSTEM — All Breakpoints                     */
+/* ─────────────────────────────────────────────────────────── */
+
+/* ── Glassmorphism Utilities ─────────────────────────────── */
+.m-glass {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-cyan);
+}
+
+.m-card {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-cyan);
+  border-radius: var(--radius-card);
+  transition: all 0.3s var(--ease);
+}
+
+.m-card:hover {
+  border-color: rgba(0, 245, 212, 0.45);
+  box-shadow: 0 0 32px rgba(0, 245, 212, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+}
+
+/* ── Typography ─────────────────────────────────────────── */
+.m-gradient-text {
+  background: linear-gradient(135deg, #FFFFFF 0%, #00F5D4 50%, #9B5DE5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.m-h1 {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.08;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.m-h2 {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.15;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.m-logo {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+/* ── Section Badge ──────────────────────────────────────── */
+.m-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 245, 212, 0.08);
+  border: 1px solid rgba(0, 245, 212, 0.3);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+
+/* ── Float Badge (hero small pills) ────────────────────── */
+.m-float-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(17, 27, 46, 0.9);
+  border: 1px solid rgba(0, 245, 212, 0.3);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFFFFF;
+  backdrop-filter: blur(8px);
+  animation: mFloat 3.5s ease-in-out infinite;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.m-btn-filled {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--cyan), #0EA5E9, var(--purple));
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  box-shadow: 0 4px 24px rgba(0, 245, 212, 0.25);
+}
+
+.m-btn-filled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(0, 245, 212, 0.4);
+}
+
+.m-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--cyan);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 11px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 245, 212, 0.4);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+
+.m-btn-outline:hover {
+  background: rgba(0, 245, 212, 0.08);
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes mFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes mBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+@keyframes mFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mPulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+@keyframes mBarFill {
+  from { width: 0%; }
+  to   { width: var(--target-width); }
+}
+
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 245, 212, 0.2); }
+  50%       { box-shadow: 0 0 40px rgba(0, 245, 212, 0.45); }
+}
+
+.m-fade-in {
+  animation: mFadeIn 0.6s var(--ease) forwards;
+}
+
+/* ── Navbar Styles ──────────────────────────────────────── */
+.m-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: rgba(5, 8, 16, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 245, 212, 0.1);
+}
+
+/* ── Hero Glow ──────────────────────────────────────────── */
+.m-hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(0, 245, 212, 0.10) 0%, rgba(155, 93, 229, 0.05) 40%, transparent 65%);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* ── Skill Bar ──────────────────────────────────────────── */
+.m-skill-bar-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.m-skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  border-radius: 999px;
+  transition: width 1.2s var(--ease);
+  box-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
+}
+
+/* ── Process Timeline ───────────────────────────────────── */
+.m-timeline-line {
+  width: 2px;
+  background: linear-gradient(180deg, var(--cyan), var(--purple));
+  flex-shrink: 0;
+}
+
+.m-timeline-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(17, 27, 46, 0.9);
+  border: 2px solid var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--cyan);
+  box-shadow: 0 0 16px rgba(0, 245, 212, 0.35);
+  flex-shrink: 0;
+}
+
+/* ── Icon Container ─────────────────────────────────────── */
+.m-icon-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0, 245, 212, 0.07);
+  border: 1px solid rgba(0, 245, 212, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.12);
+  margin-bottom: 16px;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+/* ── Tool Tag ───────────────────────────────────────────── */
+.m-tool-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 245, 212, 0.05);
+  border: 1px solid rgba(0, 245, 212, 0.18);
+  border-radius: 6px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.m-tool-tag:hover {
+  border-color: rgba(0, 245, 212, 0.4);
+  color: var(--cyan);
+}
+
+/* ── Form Input ─────────────────────────────────────────── */
+.m-input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s var(--ease);
+}
+
+.m-input::placeholder { color: var(--text-muted); }
+
+.m-input:focus {
+  border-color: rgba(0, 245, 212, 0.4);
+  box-shadow: 0 0 16px rgba(0, 245, 212, 0.1);
+}
+
+/* ── Stats Separator Dot ────────────────────────────────── */
+.m-dot-sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cyan);
+  opacity: 0.6;
+}
+
+/* ── Reel Card (9:16 aspect) ────────────────────────────── */
+.m-reel-card {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-cyan);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transition: all 0.35s var(--ease);
+  cursor: pointer;
+}
+
+.m-reel-card:hover,
+.m-reel-card:active {
+  border-color: rgba(0, 245, 212, 0.55);
+  box-shadow: 0 0 36px rgba(0, 245, 212, 0.25), 0 12px 40px rgba(0, 0, 0, 0.5);
+  transform: translateY(-6px);
+}
+
+/* ── Social Button ─────────────────────────────────────── */
+.m-social-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(0, 245, 212, 0.07);
+  border: 1px solid rgba(0, 245, 212, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  transition: all 0.3s var(--ease);
+  text-decoration: none;
+}
+
+.m-social-btn:hover {
+  background: rgba(0, 245, 212, 0.14);
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.28);
+  transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* BREAKPOINT OVERRIDES                                       */
+/* ─────────────────────────────────────────────────────────── */
+
+/* ── Mobile (<768px) ──────────────────────────────────────── */
+@media (max-width: 767px) {
+  .m-h1 { font-size: 30px; }
+  .m-h2 { font-size: 26px; }
+}
+
+/* ── Tablet (768px - 1024px) ──────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .m-h1 { font-size: 44px; }
+  .m-h2 { font-size: 36px; }
+  .m-hero-glow { width: 750px; height: 750px; }
+}
+
+/* ── Desktop (1025px+) ────────────────────────────────────── */
+@media (min-width: 1025px) {
+  .m-h1 { font-size: 60px; }
+  .m-h2 { font-size: 48px; }
+
+  .m-hero-glow {
+    width: 1000px;
+    height: 1000px;
+    background: radial-gradient(circle, rgba(0, 245, 212, 0.12) 0%, rgba(155, 93, 229, 0.06) 40%, transparent 65%);
+  }
+
+  .m-btn-filled {
+    font-size: 16px;
+    padding: 14px 32px;
+    border-radius: 14px;
+  }
+
+  .m-btn-outline {
+    font-size: 16px;
+    padding: 13px 32px;
+    border-radius: 14px;
+  }
+
+  .m-badge {
+    font-size: 12px;
+    padding: 7px 18px;
+    letter-spacing: 0.12em;
+  }
+
+  .m-float-badge {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .m-icon-container {
+    width: 72px;
+    height: 72px;
+    font-size: 28px;
+  }
+
+  .m-navbar {
+    height: 72px;
+    padding: 0 56px;
+  }
+
+  .m-logo {
+    font-size: 20px;
+  }
+
+  .m-timeline-dot {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* REELS GRID — Responsive 1/2/3 col                         */
+/* ─────────────────────────────────────────────────────────── */
+.reels-grid {
+  display: grid;
+  grid-template-columns: 1fr;               /* Mobile: 1 col */
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .reels-grid {
+    grid-template-columns: repeat(2, 1fr);  /* Tablet: 2 col */
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .reels-grid {
+    grid-template-columns: repeat(3, 1fr);  /* Desktop: 3 col */
+    gap: 28px;
+  }
 }
