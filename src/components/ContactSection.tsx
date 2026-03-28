@@ -11,10 +11,27 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setSending(false);
-    setSent(true);
-    setForm({ name: '', email: '', message: '' });
+    try {
+      const formData = new FormData();
+      formData.append('access_key', 'c0b4f6b0-b514-4713-bbf0-11577e5c7326');
+      formData.append('name', form.name);
+      formData.append('email', form.email);
+      formData.append('message', form.message);
+
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res.status === 200) {
+        setSent(true);
+        setForm({ name: '', email: '', message: '' });
+      }
+    } catch (err) {
+      console.error('Form submission error:', err);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -91,6 +108,7 @@ export default function ContactSection() {
           >
             <input
               type="text"
+              name="name"
               placeholder="Your Name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -100,6 +118,7 @@ export default function ContactSection() {
             />
             <input
               type="email"
+              name="email"
               placeholder="Your Email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -108,6 +127,7 @@ export default function ContactSection() {
               id="contact-email"
             />
             <textarea
+              name="message"
               placeholder="Tell me about your project..."
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
@@ -162,6 +182,24 @@ export default function ContactSection() {
                 <><Send size={16} /> Send Message</>
               )}
             </button>
+
+            {/* Success message */}
+            {sent && (
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                style={{
+                  textAlign: 'center',
+                  fontSize: '14px',
+                  color: '#00F5D4',
+                  marginTop: '4px',
+                  fontWeight: 500,
+                }}
+              >
+                Message sent successfully! I&apos;ll get back to you soon.
+              </motion.p>
+            )}
           </motion.form>
         </div>{/* end two-column grid */}
 

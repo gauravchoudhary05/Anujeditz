@@ -11,12 +11,12 @@ interface Reel {
 }
 
 const reels: Reel[] = [
-  { id: 1, title: 'D Garage Hilux Sidhu', category: 'Automobile', vimeoId: '1176495038', color: '#00F5D4' },
-  { id: 2, title: 'D Garage Hilux',       category: 'Automobile', vimeoId: '1176494977', color: '#00F5D4' },
-  { id: 3, title: 'D Garage',             category: 'Automobile', vimeoId: '1176494914', color: '#00F5D4' },
-  { id: 4, title: 'Shalom Scorpio N',     category: 'Automobile', vimeoId: '1176494863', color: '#9B5DE5' },
-  { id: 5, title: 'Shalom Tata Sierra',   category: 'Automobile', vimeoId: '1176494801', color: '#0EA5E9' },
-  { id: 6, title: 'The Detailing Studio', category: 'Detailing',  vimeoId: '1176494732', color: '#F59E0B' },
+  { id: 1, title: 'D Garage Hilux Sidhu', category: 'Automobile', vimeoId: '1177989746', color: '#00F5D4' },
+  { id: 2, title: 'D Garage Hilux', category: 'Automobile', vimeoId: '1176494977', color: '#00F5D4' },
+  { id: 3, title: 'D Garage', category: 'Automobile', vimeoId: '1176494914', color: '#00F5D4' },
+  { id: 4, title: 'Shalom Scorpio N', category: 'Automobile', vimeoId: '1176494863', color: '#9B5DE5' },
+  { id: 5, title: 'Shalom Tata Sierra', category: 'Automobile', vimeoId: '1176494801', color: '#0EA5E9' },
+  { id: 6, title: 'The Detailing Studio', category: 'Detailing', vimeoId: '1176494732', color: '#F59E0B' },
 ];
 
 function colorToRGB(hex: string): string {
@@ -127,24 +127,7 @@ export default function ReelsSection() {
           ))}
         </div>
 
-        {/* View all CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          style={{ textAlign: 'center', marginTop: '56px' }}
-        >
-          <a
-            href="https://vimeo.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="m-btn-outline"
-            id="view-all-work-btn"
-            style={{ textDecoration: 'none' }}
-          >
-            View All Work ↗
-          </a>
-        </motion.div>
+
       </div>
     </section>
   );
